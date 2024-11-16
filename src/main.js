@@ -36,6 +36,17 @@ form.addEventListener('submit', async event => {
   try {
     const data = await pixabayApi(query, currentPage);
     gallery.innerHTML = '';
+
+    if (data.hits.length === 0) {
+      loader.style.display = 'none';
+      iziToast.info({
+        title: 'No results',
+        message: 'Sorry, no images were found for your search.',
+        position: 'topRight',
+      });
+      return;
+    }
+
     renderGallery(data.hits);
     loader.style.display = 'none';
 
